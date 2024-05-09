@@ -116,6 +116,15 @@ llm= ChatAnyscale(model_name=ANYSCALE_MODEL_NAME, temperature=0)
 
 #####################################################################
 
+GROQ_API_KEY='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'
+os.environ["GROQ_API_KEY"] = GROQ_API_KEY
+
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_groq import ChatGroq
+llm_70b_groq = ChatGroq(temperature=0, model_name="Llama3-70b-8192")
+
+####################################################################
+
 from langchain_openai.llms.azure import AzureOpenAI
 llm_openai = AzureOpenAI(
     deployment_name="gpt-35-turbo-instruct",
@@ -139,8 +148,7 @@ def format_docs(docs):
 from langchain.prompts import PromptTemplate
 template ="""
 Trả lời câu hỏi dựa trên những quy định được cung cấp.
-Tổng hợp thông tin và đưa ra câu trả lời chính xác cuối cùng.
-Không ghi chú và trích dẫn nguồn thông tin đã tham khảo trong câu trả lời.
+Tổng hợp thông tin nếu có và đưa ra câu trả lời cuối cùng.
 Câu trả lời nên bắt đầu bằng: "Theo quy định của Trường ĐH Bách Khoa Tp.HCM, ..."
 Nếu trong quy văn bản không có thông tin cho câu trả lời, vui lòng thông báo: "Xin lỗi, tôi không có thông tin cho câu hỏi này!"
 
@@ -159,7 +167,8 @@ from langchain_core.runnables import RunnableParallel
 rag_chain_from_docs = (
     RunnablePassthrough.assign(context=(lambda x: format_docs(x["context"])))
     | QA_CHAIN_PROMPT
-    | llm
+    # | llm
+    | llm_70b_groq
     | StrOutputParser()
 )
 
