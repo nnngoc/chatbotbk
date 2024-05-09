@@ -149,6 +149,7 @@ from langchain.prompts import PromptTemplate
 template ="""
 Trả lời câu hỏi dựa trên những quy định được cung cấp.
 Tổng hợp thông tin nếu có và đưa ra câu trả lời cuối cùng.
+Nếu câu trả lời nhiều thông tin trình bày ở dạng gạch đầu dòng.
 Câu trả lời nên bắt đầu bằng: "Theo quy định của Trường ĐH Bách Khoa Tp.HCM, ..."
 Nếu trong quy văn bản không có thông tin cho câu trả lời, vui lòng thông báo: "Xin lỗi, tôi không có thông tin cho câu hỏi này!"
 
