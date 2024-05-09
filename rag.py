@@ -259,8 +259,8 @@ def rag_(question: str) -> str:
     else:
       response = rag_chain[0].invoke(question)
     
-    # return response['answer']
-    return response
+    return response['answer']
+    # return response
 
 ###################################################################################
 
