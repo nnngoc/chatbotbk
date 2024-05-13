@@ -6,10 +6,9 @@ guiding_questions = {
     "Thời gian đào tạo của chương trình thạc sĩ?": False,
     "Điều kiện được bảo vệ luận văn thạc sĩ?": False,
     "Tiêu chuẩn huy chương vàng được quy định như thế nào?": False,
-    "Miễn thi được quy định như thế nào?": False,
-    "Điểm I là điểm gì?": False
+    "Yêu cầu trình độ tiếng Anh để tốt nghiệp đối với thạc sĩ?": False,
+    "Có những loại chương trình đào tạo thạc sĩ nào?": False
 }
-
 
 
 def main():
