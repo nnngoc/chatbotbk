@@ -24,7 +24,7 @@ def main():
     st.subheader("Tôi là trợ lý ảo thông minh có khả năng giải đáp các thắc mắc về quy định học vụ của Trường Đại Học Bách Khoa - ĐHQG TP.HCM", divider='rainbow')
 
     # Hiển thị sidebar với các câu hỏi hướng dẫn
-    st.sidebar.subheader("Một số câu hỏi mẫu")
+    st.sidebar.subheader("Có thể bạn quan tâm những câu hỏi này")
     
     st.markdown(
         """
