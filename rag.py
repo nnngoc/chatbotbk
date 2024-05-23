@@ -113,7 +113,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_community.chat_models import ChatAnyscale
 
 # llm = Anyscale(model_name=ANYSCALE_MODEL_NAME)
-llm= ChatAnyscale(model_name=ANYSCALE_MODEL_NAME, temperature=0)
+llm= ChatAnyscale(model_name=ANYSCALE_MODEL_NAME, temperature=0, anyscale_api_key=ANYSCALE_API_KEY)
 
 #####################################################################
 
