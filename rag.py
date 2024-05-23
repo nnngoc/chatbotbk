@@ -1,6 +1,7 @@
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.prompts import PromptTemplate
 from utility import load_data, process_data, CustomRetriever, CustomRetriever1
+import streamlit as st
 
 __import__('pysqlite3')
 import sys
@@ -94,7 +95,6 @@ add_faq(retriever1, vectorstore1, questions, answers)
 ##################################################################################
 
 ANYSCALE_API_BASE = "credential-1711634141163"
-ANYSCALE_API_KEY = "esecret_chitz7splr5ut6vfvqpn72itd3"
 ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
 # ANYSCALE_MODEL_NAME = "meta-llama/Llama-3-8b-chat-hf"
 # ANYSCALE_MODEL_NAME = "google/gemma-7b-it"
@@ -104,7 +104,7 @@ ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
 import os
 
 os.environ["ANYSCALE_API_BASE"] = ANYSCALE_API_BASE
-os.environ["ANYSCALE_API_KEY"] = ANYSCALE_API_KEY
+os.environ["ANYSCALE_API_KEY"] = st.secrets["ANYSCALE_API_KEY"]
 
 from langchain.chains import LLMChain
 from langchain_community.llms import Anyscale
@@ -116,8 +116,7 @@ llm= ChatAnyscale(model_name=ANYSCALE_MODEL_NAME, temperature=0)
 
 #####################################################################
 
-GROQ_API_KEY='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'
-os.environ["GROQ_API_KEY"] = GROQ_API_KEY
+os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
@@ -129,7 +128,7 @@ from langchain_openai.llms.azure import AzureOpenAI
 llm_openai = AzureOpenAI(
     deployment_name="gpt-35-turbo-instruct",
     # deployment_name="gpt-35-turbo-16k",
-    api_key = 'c90c0e7fb1894a898c56123580a6ee3e',
+    api_key = st.secrets["AZURE_OPENAI_KEY"],
     api_version = "2023-09-15-preview",
     azure_endpoint = "https://bkchatbot.openai.azure.com/",
     temperature=0.0,
