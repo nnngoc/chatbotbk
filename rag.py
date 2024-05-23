@@ -1,7 +1,6 @@
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.prompts import PromptTemplate
 from utility import load_data, process_data, CustomRetriever, CustomRetriever1
-import streamlit as st
 
 __import__('pysqlite3')
 import sys
@@ -96,8 +95,7 @@ add_faq(retriever1, vectorstore1, questions, answers)
 
 ANYSCALE_API_BASE = "credential-1711634141163"
 ANYSCALE_API_KEY = "esecret_chitz7splr5ut6vfvqpn72itd3"
-# ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
-ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-70B-Instruct"
+ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
 # ANYSCALE_MODEL_NAME = "meta-llama/Llama-3-8b-chat-hf"
 # ANYSCALE_MODEL_NAME = "google/gemma-7b-it"
 # ANYSCALE_MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.1"
@@ -114,7 +112,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_community.chat_models import ChatAnyscale
 
 # llm = Anyscale(model_name=ANYSCALE_MODEL_NAME)
-llm= ChatAnyscale(model_name=ANYSCALE_MODEL_NAME, temperature=0, anyscale_api_key=ANYSCALE_API_KEY)
+llm= ChatAnyscale(model_name=ANYSCALE_MODEL_NAME, temperature=0)
 
 #####################################################################
 
@@ -127,19 +125,16 @@ llm_70b_groq = ChatGroq(temperature=0, model_name="Llama3-70b-8192")
 
 ####################################################################
 
-# from langchain_openai.llms.azure import AzureOpenAI
-# llm_openai = AzureOpenAI(
-#     deployment_name="gpt-35-turbo-instruct",
-#     # deployment_name="gpt-35-turbo-16k",
-#     api_key = 'c90c0e7fb1894a898c56123580a6ee3e',
-#     api_version = "2023-09-15-preview",
-#     azure_endpoint = "https://bkchatbot.openai.azure.com/",
-#     temperature=0.0,
-#     max_tokens=500
-# )
-
-from langchain_openai import OpenAI
-llm_openai = OpenAI(openai_api_key=st.secrets["OPENAI_API_KEY"], model_name="gpt-3.5-turbo-instruct")
+from langchain_openai.llms.azure import AzureOpenAI
+llm_openai = AzureOpenAI(
+    deployment_name="gpt-35-turbo-instruct",
+    # deployment_name="gpt-35-turbo-16k",
+    api_key = 'c90c0e7fb1894a898c56123580a6ee3e',
+    api_version = "2023-09-15-preview",
+    azure_endpoint = "https://bkchatbot.openai.azure.com/",
+    temperature=0.0,
+    max_tokens=500
+)
 
 ##########################################################################
 
@@ -173,8 +168,8 @@ from langchain_core.runnables import RunnableParallel
 rag_chain_from_docs = (
     RunnablePassthrough.assign(context=(lambda x: format_docs(x["context"])))
     | QA_CHAIN_PROMPT
-    | llm
-    # | llm_70b_groq
+    # | llm
+    | llm_70b_groq
     | StrOutputParser()
 )
 
