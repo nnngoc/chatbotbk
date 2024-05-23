@@ -137,7 +137,8 @@ llm_70b_groq = ChatGroq(temperature=0, model_name="Llama3-70b-8192")
 # )
 
 from langchain_openai import OpenAI
-llm_openai = OpenAI(openai_api_key="sk-proj-6kHxixv2KnPOTZhlW0aST3BlbkFJycEQP4JWC6a2E9fRMvNX", model_name="gpt-3.5-turbo-instruct")
+OPENAI_API_KEY="sk-proj-6kHxixv2KnPOTZhlW0aST3BlbkFJycEQP4JWC6a2E9fRMvNX"
+llm_openai = OpenAI(openai_api_key=OPENAI_API_KEY, model_name="gpt-3.5-turbo-instruct")
 
 ##########################################################################
 
