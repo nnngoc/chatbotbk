@@ -95,7 +95,8 @@ add_faq(retriever1, vectorstore1, questions, answers)
 ##################################################################################
 
 ANYSCALE_API_BASE = "credential-1711634141163"
-ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
+ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-70B-Instruct"
+# ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
 # ANYSCALE_MODEL_NAME = "meta-llama/Llama-3-8b-chat-hf"
 # ANYSCALE_MODEL_NAME = "google/gemma-7b-it"
 # ANYSCALE_MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.1"
@@ -167,8 +168,8 @@ from langchain_core.runnables import RunnableParallel
 rag_chain_from_docs = (
     RunnablePassthrough.assign(context=(lambda x: format_docs(x["context"])))
     | QA_CHAIN_PROMPT
-    # | llm
-    | llm_70b_groq
+    | llm
+    # | llm_70b_groq
     | StrOutputParser()
 )
 
