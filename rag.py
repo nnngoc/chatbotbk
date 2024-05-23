@@ -125,16 +125,19 @@ llm_70b_groq = ChatGroq(temperature=0, model_name="Llama3-70b-8192")
 
 ####################################################################
 
-from langchain_openai.llms.azure import AzureOpenAI
-llm_openai = AzureOpenAI(
-    deployment_name="gpt-35-turbo-instruct",
-    # deployment_name="gpt-35-turbo-16k",
-    api_key = 'c90c0e7fb1894a898c56123580a6ee3e',
-    api_version = "2023-09-15-preview",
-    azure_endpoint = "https://bkchatbot.openai.azure.com/",
-    temperature=0.0,
-    max_tokens=500
-)
+# from langchain_openai.llms.azure import AzureOpenAI
+# llm_openai = AzureOpenAI(
+#     deployment_name="gpt-35-turbo-instruct",
+#     # deployment_name="gpt-35-turbo-16k",
+#     api_key = 'c90c0e7fb1894a898c56123580a6ee3e',
+#     api_version = "2023-09-15-preview",
+#     azure_endpoint = "https://bkchatbot.openai.azure.com/",
+#     temperature=0.0,
+#     max_tokens=500
+# )
+
+from langchain_openai import OpenAI
+llm_openai = OpenAI(openai_api_key="sk-proj-6kHxixv2KnPOTZhlW0aST3BlbkFJycEQP4JWC6a2E9fRMvNX", model_name="gpt-3.5-turbo-instruct")
 
 ##########################################################################
 
