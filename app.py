@@ -21,7 +21,7 @@ def main():
     st.title("CHATBOT-PĐT")
     # st.markdown("<h1 style='text-align: center'>Chatbot Phòng Đào Tạo</h1>", unsafe_allow_html=True)
     
-    st.subheader("Tôi là trợ lý ảo thông minh sẵn sàng giúp bạn các thắc mắc về quy định học vụ của Trường Đại Học Bách Khoa - ĐHQG TP.HCM", divider='rainbow')
+    st.subheader("Tôi là trợ lý ảo thông minh sẵn sàng giúp bạn các thắc mắc về quy định học vụ", divider='rainbow')
 
     # st.markdown("<h3>Tôi là trợ lý ảo thông minh có khả năng giải đáp các thắc mắc <br>về quy định học vụ của Trường Đại Học Bách Khoa - ĐHQG TP.HCM</h3>", unsafe_allow_html=True)
 
