@@ -171,8 +171,8 @@ from langchain_core.runnables import RunnableParallel
 rag_chain_from_docs = (
     RunnablePassthrough.assign(context=(lambda x: format_docs(x["context"])))
     | QA_CHAIN_PROMPT
-    | llm
-    # | llm_70b_groq
+    # | llm
+    | llm_70b_groq
     | StrOutputParser()
 )
 
