@@ -7,7 +7,9 @@ guiding_questions = {
     "Điều kiện được bảo vệ luận văn thạc sĩ?": False,
     "Tiêu chuẩn huy chương vàng được quy định như thế nào?": False,
     "Yêu cầu trình độ tiếng Anh để tốt nghiệp đối với thạc sĩ?": False,
-    "Có những loại chương trình đào tạo thạc sĩ nào?": False
+    "Có những loại chương trình đào tạo thạc sĩ nào?": False,
+    "Tiến sĩ cần học bao nhiêu tín chỉ?": False,
+    "Tôi muốn đăng ký chương trình thạc sĩ nghiên cứu được không?": False
 }
 
 
