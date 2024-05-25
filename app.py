@@ -91,7 +91,7 @@ def handle_user_input1(user_prompt):
 
     # process user input
     if st.session_state.messages[-1]["role"] == "user":
-        with st.spinner("Loading..."):
+        with st.spinner("Please wait..."):
             ai_response = rag_(user_prompt)
             if ai_response == "Encountered some errors. Please recheck your request!":
                 st.session_state.messages.append({"role": "assistant", "content": "Xin lỗi, tôi không có thông tin về câu hỏi này!"})
