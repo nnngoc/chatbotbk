@@ -41,7 +41,7 @@ keyword_processor.add_keyword('nghiên cứu sinh')
 keyword_processor.add_keyword('tiến sĩ')
 
 ################################################################################
-"""
+
 import pandas as pd
 
 faq = "raw_data/faq.xlsx"
@@ -90,7 +90,7 @@ add_faq(retriever2, vectorstore2, faq_thsi_q, faq_thsi_a)
 add_faq(retriever3, vectorstore3, faq_tsi_q, faq_tsi_a)
 
 add_faq(retriever1, vectorstore1, questions, answers)
-"""
+
 
 ##################################################################################
 
