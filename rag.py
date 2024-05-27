@@ -1,4 +1,5 @@
-from langchain.embeddings import HuggingFaceEmbeddings
+# from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.prompts import PromptTemplate
 from utility import load_data, process_data, CustomRetriever, CustomRetriever1
 import streamlit as st
