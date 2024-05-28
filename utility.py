@@ -1,10 +1,16 @@
 # function support rag pipeline
 from typing import List
-from langchain.vectorstores import Chroma
+
+# from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
+
 from langchain.retrievers.multi_vector import MultiVectorRetriever
 from langchain.storage import InMemoryStore
 import uuid
-from langchain.document_loaders import TextLoader, DirectoryLoader
+
+# from langchain.document_loaders import TextLoader, DirectoryLoader
+from langchain_community.document_loaders import TextLoader, DirectoryLoader
+
 import os
 from sentence_transformers.cross_encoder import CrossEncoder
 import numpy as np
