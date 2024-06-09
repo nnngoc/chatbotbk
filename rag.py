@@ -30,6 +30,7 @@ child_text_splitter = RecursiveCharacterTextSplitter(chunk_size=400)
 vectorstore1, retriever1 = process_data(data, child_text_splitter, embedding, "data")
 vectorstore2, retriever2 = process_data(data2, child_text_splitter, embedding, "data2")
 vectorstore3, retriever3 = process_data(data3, child_text_splitter, embedding, "data3")
+vectorstore4, retriever4 = process_data(data1, child_text_splitter,embedding, "data1") # new
 
 ##############################################################################
 
@@ -40,6 +41,7 @@ keyword_processor.add_keyword('thạc sĩ')
 keyword_processor.add_keyword('học viên')
 keyword_processor.add_keyword('nghiên cứu sinh')
 keyword_processor.add_keyword('tiến sĩ')
+keyword_processor.add_keyword('sinh viên') # new
 
 ################################################################################
 """
@@ -96,8 +98,8 @@ add_faq(retriever1, vectorstore1, questions, answers)
 ##################################################################################
 
 ANYSCALE_API_BASE = "credential-1711634141163"
-ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-70B-Instruct"
-# ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
+ANYSCALE_API_KEY = "esecret_chitz7splr5ut6vfvqpn72itd3"
+ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
 # ANYSCALE_MODEL_NAME = "meta-llama/Llama-3-8b-chat-hf"
 # ANYSCALE_MODEL_NAME = "google/gemma-7b-it"
 # ANYSCALE_MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.1"
@@ -106,7 +108,7 @@ ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-70B-Instruct"
 import os
 
 os.environ["ANYSCALE_API_BASE"] = ANYSCALE_API_BASE
-os.environ["ANYSCALE_API_KEY"] = st.secrets["ANYSCALE_API_KEY"]
+os.environ["ANYSCALE_API_KEY"] = ANYSCALE_API_KEY
 
 from langchain.chains import LLMChain
 from langchain_community.llms import Anyscale
@@ -118,6 +120,7 @@ llm= ChatAnyscale(model_name=ANYSCALE_MODEL_NAME, temperature=0)
 
 #####################################################################
 
+# GROQ_API_KEY='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'
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
 from langchain_core.prompts import ChatPromptTemplate
@@ -130,7 +133,7 @@ llm_70b_groq = ChatGroq(temperature=0, model_name="Llama3-70b-8192")
 # llm_openai = AzureOpenAI(
 #     deployment_name="gpt-35-turbo-instruct",
 #     # deployment_name="gpt-35-turbo-16k",
-#     api_key = st.secrets["AZURE_OPENAI_KEY"],
+#     api_key = 'c90c0e7fb1894a898c56123580a6ee3e',
 #     api_version = "2023-09-15-preview",
 #     azure_endpoint = "https://bkchatbot.openai.azure.com/",
 #     temperature=0.0,
@@ -138,7 +141,7 @@ llm_70b_groq = ChatGroq(temperature=0, model_name="Llama3-70b-8192")
 # )
 
 from langchain_openai import OpenAI
-llm_openai = OpenAI(openai_api_key=st.secrets["OPENAI_API_KEY"], model_name="gpt-3.5-turbo-instruct", temperature=0)
+llm_openai = OpenAI(openai_api_key=st.secrets["OPENAI_API_KEY"], model_name="gpt-3.5-turbo-instruct")
 
 ##########################################################################
 
@@ -153,7 +156,7 @@ from langchain.prompts import PromptTemplate
 template ="""
 Trả lời câu hỏi dựa trên những quy định được cung cấp.
 Tổng hợp thông tin cần thiết và đưa ra câu trả lời cuối cùng.
-Nếu câu trả lời nhiều thông tin, trình bày ở dạng gạch đầu dòng.
+Nếu câu trả lời nhiều thông tin trình bày ở dạng gạch đầu dòng.
 Câu trả lời nên bắt đầu bằng: "Theo quy định của Trường ĐH Bách Khoa Tp.HCM, ..."
 Nếu trong quy văn bản không có thông tin cho câu trả lời, vui lòng thông báo: "Xin lỗi, tôi không có thông tin cho câu hỏi này!"
 
@@ -216,15 +219,21 @@ ensemble_retriever2 = EnsembleRetriever(retrievers=[bm25_retriever2, retriever2]
 bm25_retriever3 = BM25Retriever.from_documents(data3, k=10)
 ensemble_retriever3 = EnsembleRetriever(retrievers=[bm25_retriever3, retriever3], weights=[0.5, 0.5])
 
+#new
+bm25_retriever4 = BM25Retriever.from_documents(data1, k=10)
+ensemble_retriever4 = EnsembleRetriever(retrievers=[bm25_retriever4, retriever4], weights=[0.5, 0.5])
+
 #########################################################################################
 
 custom_retriever1 = CustomRetriever1(retriever = ensemble_retriever1)
 custom_retriever2 = CustomRetriever1(retriever = ensemble_retriever2)
 custom_retriever3 = CustomRetriever1(retriever = ensemble_retriever3)
+custom_retriever4 = CustomRetriever1(retriever = ensemble_retriever4) #new
 
 multiq_chain1 = generate_queries | custom_retriever1
 multiq_chain2 = generate_queries | custom_retriever2
 multiq_chain3 = generate_queries | custom_retriever3
+multiq_chain4 = generate_queries | custom_retriever4 #new
 
 rag_chain_with_source1 = RunnableParallel(
     {"context": multiq_chain1, "question": RunnablePassthrough()}
@@ -236,6 +245,11 @@ rag_chain_with_source2 = RunnableParallel(
 
 rag_chain_with_source3 = RunnableParallel(
     {"context": multiq_chain3, "question": RunnablePassthrough()}
+).assign(answer=rag_chain_from_docs)
+
+#new
+rag_chain_with_source4 = RunnableParallel(
+    {"context": multiq_chain4, "question": RunnablePassthrough()}
 ).assign(answer=rag_chain_from_docs)
 
 ############################################################################################
@@ -250,22 +264,55 @@ rag_chain_with_source3 = RunnableParallel(
 
 ################################################################################
 
-rag_chain = [rag_chain_with_source1, rag_chain_with_source2, rag_chain_with_source3]
+#new
+rag_chain = [rag_chain_with_source1, rag_chain_with_source2, rag_chain_with_source3, rag_chain_with_source4]
 
 ###################################################################################
 
+
 def rag_(question: str) -> str:
 
+    # Sets for different categories of keywords
+    master_keywords = {'thạc sĩ', 'học viên'}
+    phd_keywords = {'nghiên cứu sinh', 'tiến sĩ'}
+    student_keyword = 'sinh viên'
+
     keywords_found = keyword_processor.extract_keywords(question)
-    if 'thạc sĩ' in keywords_found or 'học viên' in keywords_found:
-      response = rag_chain[1].invoke(question)
-    elif 'nghiên cứu sinh' in keywords_found or 'tiến sĩ' in keywords_found:
-      response = rag_chain[2].invoke(question)
-    else:
-      response = rag_chain[0].invoke(question)
     
+    # Check for combinations
+    if len(keywords_found) >= 2:
+        # Check if all keywords are within the same category
+        if all(keyword in master_keywords for keyword in keywords_found):
+            response = rag_chain[1].invoke(question)
+        elif all(keyword in phd_keywords for keyword in keywords_found):
+            response = rag_chain[2].invoke(question)
+        else:
+            response = rag_chain[0].invoke(question)
+
+    elif any(keyword in master_keywords for keyword in keywords_found):
+        response = rag_chain[1].invoke(question)
+    elif any(keyword in phd_keywords for keyword in keywords_found):
+        response = rag_chain[2].invoke(question)
+    elif student_keyword in keywords_found:
+        response = rag_chain[3].invoke(question)
+    
+    else:
+        response = rag_chain[0].invoke(question)
+
     return response['answer']
-    # return response
+
+# def rag_(question: str) -> str:
+
+#     keywords_found = keyword_processor.extract_keywords(question)
+#     if 'thạc sĩ' in keywords_found or 'học viên' in keywords_found:
+#       response = rag_chain[1].invoke(question)
+#     elif 'nghiên cứu sinh' in keywords_found or 'tiến sĩ' in keywords_found:
+#       response = rag_chain[2].invoke(question)
+#     else:
+#       response = rag_chain[0].invoke(question)
+    
+#     return response['answer']
+
 
 ###################################################################################
 
