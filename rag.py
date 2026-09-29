@@ -97,13 +97,6 @@ add_faq(retriever1, vectorstore1, questions, answers)
 
 ##################################################################################
 
-ANYSCALE_API_BASE = "credential-1711634141163"
-ANYSCALE_API_KEY = "esecret_chitz7splr5ut6vfvqpn72itd3"
-ANYSCALE_MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
-# ANYSCALE_MODEL_NAME = "meta-llama/Llama-3-8b-chat-hf"
-# ANYSCALE_MODEL_NAME = "google/gemma-7b-it"
-# ANYSCALE_MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.1"
-# ANYSCALE_MODEL_NAME = "mistralai/Mixtral-8x7B-Instruct-v0.1"
 
 import os
 
@@ -120,7 +113,6 @@ llm= ChatAnyscale(model_name=ANYSCALE_MODEL_NAME, temperature=0)
 
 #####################################################################
 
-# GROQ_API_KEY='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'
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
 from langchain_core.prompts import ChatPromptTemplate
@@ -129,16 +121,6 @@ llm_70b_groq = ChatGroq(temperature=0, model_name="Llama3-70b-8192")
 
 ####################################################################
 
-# from langchain_openai.llms.azure import AzureOpenAI
-# llm_openai = AzureOpenAI(
-#     deployment_name="gpt-35-turbo-instruct",
-#     # deployment_name="gpt-35-turbo-16k",
-#     api_key = 'c90c0e7fb1894a898c56123580a6ee3e',
-#     api_version = "2023-09-15-preview",
-#     azure_endpoint = "https://bkchatbot.openai.azure.com/",
-#     temperature=0.0,
-#     max_tokens=500
-# )
 
 from langchain_openai import OpenAI
 llm_openai = OpenAI(openai_api_key=st.secrets["OPENAI_API_KEY"], model_name="gpt-3.5-turbo-instruct")
